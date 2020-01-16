@@ -12,9 +12,9 @@
 #define MAXSIZE 50
 
 int testint(char*);
-int search(char*);
+void search(char []);
 void sort(char*);
-int split(char*);
+void ssplit(char []);
 
 main()
 {
@@ -136,7 +136,7 @@ main()
 		if (len==1)
 		{
 			int choice = buff[0] - '0';
-			if (choice > 2){
+			if (choice > 3){
 				char b[] = "Invalid choices.";
 
 				sntb = send(ns, b, sizeof(b), 0);
@@ -159,14 +159,13 @@ main()
 		switch(choice)
 		{
 			case 1:
-				pos = search(intbuff);
-				printf("\n%d", pos);
+				search(intbuff);
 				break;
 			case 2:
 				sort(intbuff);
 				break;
 			case 3:
-				split(intbuff);
+				ssplit(intbuff);
 				break;
 			default:
 				break;
@@ -203,20 +202,30 @@ int testint(char* buff)
 	return 1;
 }
 
-int search(char* buff)
+void search(char buff[])
 {
-	int a;
+	int j = 0;
+	char a;
+	int pos = -1;
 	printf("\nEnter item to search for: ");
-	scanf("%s", &a);
-	int j;
+	scanf(" %c", &a);
 	for(j=0; j<strlen(buff); j++)
 	{
-		if ((a[0]-buff[j])==0)
+		// printf("ayyyy");
+		if (buff[j]==a)
 		{
-			return j;
+			pos = j;
+			break;
 		}
 	}
-	return -1;
+	int x=0;
+	fflush(stdin);
+	fflush(stdout);
+	printf("\nThe position is: %d\n", pos);
+	//printf("\ngangam");
+	fflush(stdin);
+	fflush(stdout);
+	return;
 }
 
 void sort(char* buff)
@@ -234,10 +243,10 @@ void sort(char* buff)
 		}
 	}
 
-	printf("%s\n", buff);
+	printf("The sorted array is: %s\n", buff);
 }
 
-void split(char* buff)
+void ssplit(char* buff)
 {
 	int i;
 	int n = strlen(buff);
@@ -246,20 +255,27 @@ void split(char* buff)
 	int k=0, l=0;
 	for (i=0; i<n; i++)
 	{
-		if (buff[i]%2 == 0)
+		if ((buff[i]-'0')%2 == 0)
 		{
-			even[k] == buff[i];
+			even[k] = buff[i];
 			k++;
 		}
 		else
 		{
-			odd[l] == buff[i];
+			odd[l] = buff[i];
 			l++;
 		}
 	}
-	odd[l] = "\0";
-	even[k] = "\0";
+	odd[k] = '\0';
+	even[l] = '\0';
 
-	printf("%s\n", odd);
-	printf("%s\n", even);
+	fflush(stdin);
+	fflush(stdout);
+	printf("\nThe Odd Array: %s", odd);
+	fflush(stdin);
+	fflush(stdout);
+	printf("\nThe Even Array: %s", even);
+	fflush(stdin);
+	fflush(stdout);
+	return;
 }
