@@ -119,7 +119,8 @@ main()
 
 	while (!fexit)
 	{
-		recb = recv(ns, buff, sizeof(buff), 0);
+		char buff2[100];
+		recb = recv(ns, buff2, sizeof(buff2), 0);
 		if (recb==-1)
 		{
 			printf("\nMessage receiving failed!");
@@ -130,12 +131,17 @@ main()
 
 		// printf("\nMessage received!");
 		// printf("\nMessage: ");
-		// puts(buff);
 
-		len = strlen(buff);
+		// fflush(stdout);
+		// fflush(stdin);
+		// printf("\n%s", buff2);
+		// fflush(stdout);
+		// fflush(stdin);
+
+		len = strlen(buff2);
 		if (len==1)
 		{
-			int choice = buff[0] - '0';
+			int choice = buff2[0] - '0';
 			if (choice > 3){
 				char b[] = "Invalid choices.";
 
@@ -154,8 +160,19 @@ main()
 			}
 		}
 
+		if (strcmp(buff2, "exit") == 0)
+		{
+			// printf("hai hai");
+			fexit = 1;
+			printf("\nServer closing down.");
+			printf("\n");
+			close(ns);
+			close(s);
+			exit(0);
+		}
+
 		int pos = 0;
-		int choice = buff[0] - '0';
+		int choice = buff2[0] - '0';
 		switch(choice)
 		{
 			case 1:
@@ -171,17 +188,13 @@ main()
 				break;
 		}
 
-		if (strcmp(buff, "exit") == 0)
-		{
-			fexit = 1;
-		}
-
 	}
 
-	printf("\nServer closing down.");
+	printf("\nServer is closing down.");
 	printf("\n");
 	close(ns);
 	close(s);
+	exit(0);
 }
 
 

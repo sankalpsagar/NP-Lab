@@ -60,31 +60,44 @@ main()
 
 	printf("\nMessage received!");
 	printf("\nMESSAGE: ");
-	printf("%s", buff);
+	printf("%s\n", buff);
+
+	if (strcmp(buff, "Send integers only.") == 0){
+		exit(0);
+	}
 
 	while(1){
 		int a;
 		printf("\nEnter your choice: \n1.Search \n2.Sort \n3.Split \n4.EXIT \n");
 		scanf ("%d", &a);
 		char c = a + '0';
+
+		if (a == 1 || a == 2 || a == 3){
 		buff[0] = c;
 		buff[1] = '\0';
-
-		if (a == 4){
-			buff[0]='e';
-			buff[1]='x';
-			buff[2]='i';
-			buff[3]='t';
-			buff[4]='\0';
-
-			break;
 		}
+
+		else if (a == 4){
+			strcpy(buff, "exit");
+		}
+
+		else{
+			printf("\nInvalid choice.");
+			continue;
+		}
+		
+		// puts(buff);
 
 		sntb = send(s, buff, sizeof(buff), 0);
 		if (sntb==-1)
 		{
 			close(s);
 			printf("\nMessage could not be sent.");
+			exit(0);
+		}
+
+		if (a==4){
+			printf("\nClient is closing down.\n");
 			exit(0);
 		}
 	}
